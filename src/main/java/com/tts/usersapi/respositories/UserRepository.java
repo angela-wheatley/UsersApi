@@ -15,4 +15,6 @@ public interface UserRepository extends CrudRepository<User, Long>
     
     @Override
     public List<User> findAll();
+    
+    public List<User> findByFirstNameAndLastName(String firstName, String lastName);
 }

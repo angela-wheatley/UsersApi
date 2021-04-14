@@ -75,7 +75,7 @@ public class UserControllerV2
     @PostMapping("/users")
     public ResponseEntity<Void> createUser(@RequestBody @Valid User user, BindingResult bindingResult)
     {
-        if(repository.findById(user.getId()) != null) {
+        if(repository.findByFirstNameAndLastName(user.getFirstName(), user.getLastName()).size() != 0) {
             bindingResult.rejectValue("id", "error.id", "User id aleady exists");
         }
         if(bindingResult.hasErrors()) {
