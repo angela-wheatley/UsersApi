@@ -42,13 +42,14 @@ public class UserControllerV1
     @GetMapping("/users")
     public ResponseEntity<List<User>> getUsers(@RequestParam(value="state", required=false) String state)
     {
+        List<User> users;
         if (state != null)
         {
-            repository.findByState(state);
-            return new ResponseEntity<>(HttpStatus.OK);
+            users = repository.findByState(state);
+            return new ResponseEntity<>(users, HttpStatus.OK);
         }
-        repository.findAll();
-        return new ResponseEntity<>(HttpStatus.OK);
+        users = repository.findAll();
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
     
     @ApiOperation(value = "Get a single user", response = User.class)
@@ -63,8 +64,7 @@ public class UserControllerV1
         if(!user.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        repository.findById(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
     
     @ApiOperation(value = "Create a user", response = Void.class)
